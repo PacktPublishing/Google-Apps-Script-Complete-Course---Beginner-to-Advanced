@@ -1,0 +1,31 @@
+function firstApp(){
+  var welcomeMessage = "Hello World";
+  for(var x=0;x<10;x++){
+    Logger.log(welcomeMessage + ' ' + x); 
+  }
+}
+
+function createDoc(){
+ var doc = DocumentApp.create('New Test Doc') 
+}
+
+function updateDoc(){
+  var doc = DocumentApp.openById('1VbuLY86hkqiJ6kakCFFyQ6GDkZvljUlDujsubzaxUJY');
+  //var doc = DocumentApp.openByUrl('https://docs.google.com/open?id=1VbuLY86hkqiJ6kakCFFyQ6GDkZvljUlDujsubzaxUJY');
+  var body = doc.getBody();
+  body.appendParagraph('Some new content : added ' + Date());
+  body.appendHorizontalRule();
+  body.appendPageBreak();
+
+}
+
+function seeDoc(){
+  var doc = DocumentApp.openById('1VbuLY86hkqiJ6kakCFFyQ6GDkZvljUlDujsubzaxUJY');
+  var body = doc.getBody();
+  var selection = body.getText();
+  Logger.log(selection);
+  var spanish = LanguageApp.translate(selection, 'en', 'es');
+  Logger.log(spanish);
+  body.appendParagraph(spanish);
+  
+}

@@ -1,0 +1,65 @@
+<script>
+    var datags = < ? != JSON.stringify(data) ? > ;
+    console.log(datags);
+</script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <style>
+        table,
+        td {
+            border: 1px solid black;
+        }
+        
+        td {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>Select Sheet :
+        <select id="aSheets"></select>
+    </div>
+    <div id="output"></div>
+    <script>
+        var output = document.getElementById('output');
+        var aSheets = document.getElementById('aSheets');
+        aSheets.onchange = function () {
+            //console.log(this.value);
+            google.script.run.withSuccessHandler(onSuccess).findSheetData(this.value);
+        }
+
+        function onSuccess(data) {
+            if (data.success) {
+                console.log(data.data.length);
+                var html = '<table>';
+                for (var x = 0; x < data.data.length; x++) {
+                    html += '<tr>';
+                    for (var i = 0; i < data.data[x].length; i++) {
+                        html += '<td>' + data.data[x][i] + '</td>';
+                    }
+                    html += '</tr>';
+                }
+                html += '</table>';
+                output.innerHTML = html;
+            }
+            console.log('RESPONSE');
+            console.log(data);
+        }
+        window.onload = function () {
+            console.log(datags.sheets);
+            for (var x = 0; x < datags.sheets.length; x++) {
+                var opt = document.createElement('option');
+                opt.value = datags.sheets[x];
+                opt.innerHTML = datags.sheets[x];
+                aSheets.appendChild(opt);
+                console.log(datags.sheets[x]);
+            }
+        }
+    </script>
+</body>
+
+</html>

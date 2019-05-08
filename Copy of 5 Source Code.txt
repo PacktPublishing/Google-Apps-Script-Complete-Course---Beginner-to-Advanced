@@ -1,0 +1,10 @@
+var a = "hello";
+var b = 10;
+var c = false;
+var d = ['a',b,10,true];
+var e = {'first':'Hello','second':'World'};
+function myFunction() {
+  //code
+  Logger.log(a);
+  
+}

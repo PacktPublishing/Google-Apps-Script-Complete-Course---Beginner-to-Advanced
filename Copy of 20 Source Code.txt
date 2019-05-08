@@ -1,0 +1,86 @@
+Scripts Home - https://script.google.com/home
+
+Apps with access to your account - https://myaccount.google.com/permissions?pli=1
+
+Developer home documentation - https://developers.google.com/apps-script/
+
+GS Code
+
+function doGet(){
+  var output = HtmlService.createTemplateFromFile('index');
+  output.content = 'New string being passed';
+  return output.evaluate();
+}
+
+function doUpload(data) {
+  Logger.log(data);
+  var fileImage = data.myImage;
+  var folder = DriveApp.getFolderById('1qKpO8bUlNItJaAWkeQYmLnr2CCDC6T3L');
+  var image = folder.createFile(fileImage);
+  var response = {
+    'url':image.getUrl(),
+    'status':true
+  }
+  
+  var ss = SpreadsheetApp.openById('1L60inIY-Cnan4tWn5y4CQMJJCnS-8lXhS_OrpHNVUEI');
+  var sheet = ss.getSheetByName('sheet1');
+  var addRow = sheet.appendRow([image.getUrl(),data.first,Date()]);
+  var body = 'Image uploaded '+image.getUrl();
+  var email = MailApp.sendEmail('gappscourses@gmail.com', 'New Image Uploaded', body);
+  //1qKpO8bUlNItJaAWkeQYmLnr2CCDC6T3L
+  return response;
+
+}
+
+//https://developers.google.com/apps-script/reference/html/html-template
+
+//function doGet(){
+// var template = HtmlService.createTemplate('<?= foo ?>');
+// template.foo = 'Hello World!';
+// return template.evaluate();
+//}
+
+//function doGet() {
+//  var output = '<h1 style="color:red;">Hello</h1>';
+//  var html = HtmlService.createHtmlOutput(output)
+//  return html;
+//}
+
+***INDEX.html
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><?= content ?></title>
+  </head>
+  <body>
+    <h1><?= content ?></h1>
+    <div id="output"></div>
+    <form >
+     <input type="text" name="first" id="first" value="Laurence">
+     <input type="file" name="myImage" mulitple>
+     <input type="button" id="subButton" value="submit">
+    </form>
+    <script>
+    var output = document.getElementById('output');
+    var first = document.getElementById('first');
+    document.getElementById('subButton').addEventListener('click', function(e){
+     e.preventDefault();
+     output.innerHTML = first.value;
+     //var myData = {'first':first.value}
+     console.log(this.parentNode);
+     google.script.run.withSuccessHandler(onSuccess).doUpload(this.parentNode);
+    })
+    function onSuccess(data){
+     console.log(data);
+     if(data.status){
+     output.innerHTML = 'Image uploaded <br> <a href="'+data.url+'" target="_blank">'+data.url+'</a>';
+     }
+    }
+    </script>
+  </body>
+</html>
+

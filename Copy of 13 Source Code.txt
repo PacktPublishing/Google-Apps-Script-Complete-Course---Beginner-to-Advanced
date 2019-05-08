@@ -1,0 +1,40 @@
+function doGet(){
+  //var output = HtmlService.createHtmlOutputFromFile('index'); 
+  var output = HtmlService.createTemplateFromFile('index');
+  output.content = 'New string being passed';
+  return output.evaluate();
+}
+function doUpload(data) {
+  Logger.log(data);
+  return data;
+}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><?= content ?></title>
+  </head>
+  <body>
+    <h1><?= content ?></h1>
+    <div id="output"></div>
+    <form>
+     <input type="type" name="first" id="first" value="Laurence">
+     <input type="button" id="subButton" value="submit">
+    </form>
+    <script>
+    var output = document.getElementById('output');
+    var first = document.getElementById('first');
+    document.getElementById('subButton').addEventListener('click', function(e){
+     e.preventDefault();
+     output.innerHTML = first.value;
+     var myData = {'first':first.value}
+     google.script.run.withSuccessHandler(onSuccess).doUpload(myData);
+    })
+    function onSuccess(data){
+     console.log(data);
+    }
+    </script>
+  </body>
+</html>

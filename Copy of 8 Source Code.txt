@@ -1,0 +1,19 @@
+function onFormSubmit(e){
+  Logger.log('Submitted Again');
+  Logger.log(e);
+  Logger.log('Group '+e.namedValues['Select Group']);
+  Logger.log('Group from Array '+e.values[3]);
+  sendHTMLEmail(e.values);
+}
+function test1(){
+  var array = ['5/31/2018 21:46:19', 'gappscourses@gmail.com', 'John', 'group 1', 'Yes please send me emails']; 
+  sendHTMLEmail(array);
+}
+function sendHTMLEmail(data){
+  Logger.log(data);
+  var emailHTML = HtmlService.createHtmlOutput('<h1>Hello</h1>').getContent();
+  MailApp.sendEmail(data[1], 'subject', '',{
+    htmlBody:emailHTML 
+  });
+  
+}

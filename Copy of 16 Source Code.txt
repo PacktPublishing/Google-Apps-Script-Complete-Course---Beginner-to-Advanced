@@ -1,0 +1,45 @@
+function onFormSubmit(e){
+  sendHTMLEmail(e.values);
+}
+function test1(){
+  var array = ['5/31/2018 21:46:19', 'gappscourses@gmail.com', 'John', 'group 1', 'Yes please send me emails']; 
+  sendHTMLEmail(array);
+}
+function groupEmailer(){
+  var ss = SpreadsheetApp.openById('1yyvece07hE-Z2mTawUw7i2jVlVNd_MGnwfj1rDi8u18');
+  var sheet = ss.getSheetByName('Form responses 1');
+  var tracker = ss.getSheetByName('tracker');
+  var data = sheet.getSheetValues(2, 1, sheet.getLastRow()-1, sheet.getLastColumn());
+  Logger.log(data);
+  for(var i=0;i<data.length;i++){
+    if(data[i][4] != ''){
+      emailerOut(data[i]);
+      tracker.appendRow([Date(),data[i][1],data[i][4]]);
+    }
+  }
+}
+function emailerOut(data){
+  var emailHTML = HtmlService.createHtmlOutputFromFile('email2').getContent();
+  emailHTML = emailHTML.replace('#GROUP',data[3]);
+  emailHTML = emailHTML.replace('#DATE',Date());
+  MailApp.sendEmail(data[1], data[3] + 'weekly news', '',{
+    htmlBody:emailHTML
+  });
+}
+function sendHTMLEmail(data){
+  var emailHTML = HtmlService.createHtmlOutputFromFile('email').getContent();
+  emailHTML = emailHTML.replace('#DATE',data[0]);
+  emailHTML = emailHTML.replace('#GROUP',data[3]);
+  emailHTML = emailHTML.replace('#NAME',data[2]);
+  emailHTML = emailHTML.replace('#MESSAGE',data[4]);
+  var blob = HtmlService.createHtmlOutput(emailHTML);
+  var pdf = blob.getAs('application/pdf');
+  var newName = data[2].replace(/[^A-Z0-9]/ig,'_');
+  pdf.setName(newName);
+  //DriveApp.createFile(pdf);
+  MailApp.sendEmail(data[1], 'subject', '',{
+    htmlBody:emailHTML,
+    attachments:[pdf]
+  });
+  
+}

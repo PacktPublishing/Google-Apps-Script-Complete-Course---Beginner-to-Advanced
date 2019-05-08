@@ -1,0 +1,4 @@
+<img src="https://drive.google.com/uc?id=[ID of Your Google Image]"> 
+
+You can also get the ID from the share link
+

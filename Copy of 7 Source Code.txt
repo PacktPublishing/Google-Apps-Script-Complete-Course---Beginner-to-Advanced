@@ -1,0 +1,6 @@
+//https://developers.google.com/apps-script/reference/html/html-output
+function doGet() {
+  var output = '<h1 style="color:red;">Hello</h1>';
+  var html = HtmlService.createHtmlOutput(output)
+  return html;
+}

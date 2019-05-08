@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><?= content ?></title>
+  </head>
+  <body>
+    <h1><?= content ?></h1>
+    <div id="output"></div>
+    <form >
+     <input type="text" name="first" id="first" value="Laurence">
+     <input type="file" name="myImage" mulitple>
+     <input type="button" id="subButton" value="submit">
+    </form>
+    <script>
+    var output = document.getElementById('output');
+    var first = document.getElementById('first');
+    document.getElementById('subButton').addEventListener('click', function(e){
+     e.preventDefault();
+     output.innerHTML = first.value;
+     //var myData = {'first':first.value}
+     console.log(this.parentNode);
+     google.script.run.withSuccessHandler(onSuccess).doUpload(this.parentNode);
+    })
+    function onSuccess(data){
+     console.log(data);
+     if(data.status){
+     output.innerHTML = 'Image uploaded <br> <a href="'+data.url+'" target="_blank">'+data.url+'</a>';
+     }
+    }
+    </script>
+  </body>
+</html>
+
+

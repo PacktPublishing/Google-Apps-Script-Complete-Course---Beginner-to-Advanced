@@ -1,0 +1,123 @@
+function onOpen(){
+  DocumentApp.getUi()
+  .createMenu('Advanced 2')
+  .addItem('one', 'myFun1')
+  .addItem('two', 'myFun2')
+  .addSeparator()
+  .addItem('three', 'myFun3')
+  .addItem('four', 'myFun4')
+  .addItem('five', 'myFun5')
+  .addItem('six', 'myFun6')
+  .addItem('seven', 'myFun7')
+  .addItem('eight', 'myFun8')
+  .addItem('nine', 'myFun9')
+  .addItem('ten', 'myFun10')
+  .addToUi();
+}
+
+function myFun1(){
+  var body = DocumentApp.getActiveDocument().getBody();
+  var ui = DocumentApp.getUi();
+  var response = ui.prompt('Search', 'What did you want to find?', ui.ButtonSet.OK_CANCEL);
+  if(response.getResponseText()){
+    var replacer = ui.prompt('Replace', 'Replace with what?', ui.ButtonSet.OK_CANCEL);
+    body.replaceText(response.getResponseText(), replacer.getResponseText());
+  } 
+}
+
+function myFun2(){
+  var body = DocumentApp.getActiveDocument().getBody();
+  var ui = DocumentApp.getUi();
+  var response = ui.prompt('Search', 'What did you want to find?', ui.ButtonSet.OK_CANCEL);
+  if(response.getResponseText()){
+    var finderContent = body.findText(response.getResponseText());
+    Logger.log(finderContent);
+    while(finderContent != null){
+    var outputContent = finderContent.getElement().editAsText();
+    Logger.log(outputContent);
+    var startPos = finderContent.getStartOffset();
+    var endPos = finderContent.getEndOffsetInclusive();
+    outputContent.setForegroundColor(startPos,endPos,'#00FFFF');
+    finderContent = body.findText(response.getResponseText(),finderContent);
+    }
+  } 
+}
+
+function myFun3(){
+  var selection = DocumentApp.getActiveDocument().getSelection();
+  if(selection){
+    var el = selection.getRangeElements();
+    for(var x=0;x<el.length;x++){
+      var textSelected = el[x].getElement().editAsText();
+      //Logger.log(textSelected.getText());
+      if(el[x].isPartial()){
+        var selText = textSelected.getText().substring(el[x].getStartOffset(),el[x].getEndOffsetInclusive()+1)
+        textSelected.deleteText(el[x].getStartOffset(),el[x].getEndOffsetInclusive());
+        textSelected.insertText(el[x].getStartOffset(),selText.toUpperCase());
+        Logger.log(selText);
+      }else{
+        textSelected.setText(textSelected.getText().toUpperCase());
+      }
+    }
+  }
+}
+
+function myFun4(){
+  var doc = DocumentApp.getActiveDocument();
+  var body = doc.getBody();
+  var finderContent = body.findText('HELLO');
+  var x = 1;
+    while(finderContent != null){
+      var outputContent = finderContent.getElement().asText();
+      Logger.log(outputContent);
+      var startPos = finderContent.getStartOffset();
+      var endPos = finderContent.getEndOffsetInclusive()+1;
+      outputContent.insertText(endPos, ' WORLD');
+      outputContent.insertText(startPos, ' ' + x + ' ');
+      if(x>10){break;}
+      x++;
+      outputContent.setForegroundColor(startPos,endPos+9,'#FF0000');
+      finderContent = body.findText('HELLO',finderContent);
+    }
+}
+function myFun5(){
+  var doc = DocumentApp.getActiveDocument();
+  var body = doc.getBody();
+  var finderContent = body.findText('HELLO');
+
+  var x = 1;
+    while(finderContent != null){
+      var pos = doc.newPosition(finderContent.getElement(), 0)
+      //doc.setCursor(pos);
+      var booker = doc.addBookmark(pos);
+      
+      if(x>10){break;}
+      x++;
+
+      finderContent = body.findText('HELLO',finderContent);
+    }
+}
+function myFun6(){
+ 
+}
+function myFun7(){
+
+}
+function myFun8(){
+ 
+}
+function myFun9(){
+
+}
+function myFun10(){
+
+}
+
+
+
+
+
+
+
+
+

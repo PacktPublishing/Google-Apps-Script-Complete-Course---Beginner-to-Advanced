@@ -1,3 +1,7 @@
+## [Get this title for $10 on Packt's Spring Sale](https://www.packt.com/V12133?utm_source=github&utm_medium=packt-github-repo&utm_campaign=spring_10_dollar_2022)
+-----
+For a limited period, all eBooks and Videos are only $10. All the practical content you need \- by developers, for developers
+
 # Google Apps Script Complete Course - Beginner to Advanced		
 This is the code repository for [Google Apps Script Complete Course - Beginner to Advanced](https://www.packtpub.com/application-development/google-apps-script-complete-course-beginner-advanced-video), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the video course from start to finish.
 ## About the Video Course

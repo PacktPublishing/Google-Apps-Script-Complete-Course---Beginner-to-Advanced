@@ -27,7 +27,3 @@ N/A
 * [A Google Apps Script Exercise to Build a Consent Form [Video]](https://www.packtpub.com/application-development/google-apps-script-exercise-build-consent-form-video)
 
 * [An Introduction to CSS - A Complete Beginner to Expert Course [Video]](https://www.packtpub.com/application-development/introduction-css-complete-beginner-expert-course-video)
-### Download a free PDF
-
- <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
-<p align="center"> <a href="https://packt.link/free-ebook/9781789613537">https://packt.link/free-ebook/9781789613537 </a> </p>
